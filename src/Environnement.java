@@ -116,7 +116,7 @@ public class Environnement {
         stringBuilder.append('|').append("-".repeat(Math.max(0, N*3))).append('|');
 
         // Agents
-        stringBuilder.append("\n\nAgents :\n");
+        /*stringBuilder.append("\n\nAgents :\n");
         stringBuilder.append('|').append("-".repeat(Math.max(0, N*3))).append("|\n");
         for(int i=0;i<N;i++){
             stringBuilder.append("|");
@@ -133,7 +133,7 @@ public class Environnement {
             }
             stringBuilder.append("|\n");
         }
-        stringBuilder.append('|').append("-".repeat(Math.max(0, N*3))).append('|');
+        stringBuilder.append('|').append("-".repeat(Math.max(0, N*3))).append('|');*/
         return  stringBuilder.toString();
     }
 
