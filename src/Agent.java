@@ -37,21 +37,12 @@ public class Agent {
         long fA = memory.stream().filter(character -> character=='A').count();
         long fB = memory.stream().filter(character -> character=='B').count();
         double f = 0;
+        double DOUBLE_MEM = (double)MEMORY_SIZE;
         char tile = env.getTile(this);
         if(isCarrying && tile == '0') {
 
-            if(ERRORS){
-                if(object=='A'){
-                    f = (fA+ERROR_RATE*fB)/MEMORY_SIZE;
-                }else{
-                    f = (fB+ERROR_RATE*fA)/MEMORY_SIZE;
-                }
-            }
-            else {
-                if(object == 'A')
-                    f = fA/(double)MEMORY_SIZE;
-                else f = fB/(double)MEMORY_SIZE;
-            }
+            f = ERRORS ? (object=='A' ? (fA+ERROR_RATE*fB)/DOUBLE_MEM : (fB+ERROR_RATE*fA)/DOUBLE_MEM) : (object == 'A') ? fA/DOUBLE_MEM : fB/DOUBLE_MEM;
+
             double prob_dep = Math.pow(f/(K_MINUS+f),2);
             if(rnd.nextDouble() < prob_dep) {
                 isCarrying = false;
@@ -60,8 +51,8 @@ public class Agent {
             }
 
         }else if(!isCarrying && tile != '0'){
-            f = tile=='A'?fA:fB;
-            double prob_get = Math.pow(K_PLUS/(K_PLUS+f),2);
+            f = ERRORS ? (tile=='A' ? (fA+ERROR_RATE*fB)/DOUBLE_MEM : (fB+ERROR_RATE*fA)/DOUBLE_MEM) : (tile == 'A') ? fA/DOUBLE_MEM : fB/DOUBLE_MEM;
+            double prob_get = Math.pow(K_PLUS/(K_PLUS+f/DOUBLE_MEM),2);
             if(rnd.nextDouble() < prob_get) {
                 isCarrying = true;
                 object = env.getItem(this);
