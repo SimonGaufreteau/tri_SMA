@@ -35,7 +35,7 @@ public class FourmisApplication extends Application implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if(step++%500==0){
+        if(step++%600==0){
             Platform.runLater(() -> {
                 char[][] grid = ev.getGrille();
                 int n = ev.getN();
@@ -74,10 +74,9 @@ public class FourmisApplication extends Application implements Observer {
         }
         sc = new Scene(gp, ev.getN()*10, ev.getM()*10, true);
         stage.setScene(sc);
-        stage.setTitle("TAQUIN très TAQUIN");
+        stage.setTitle("Tri SMA");
 
         stage.show();
-
     }
 
 
