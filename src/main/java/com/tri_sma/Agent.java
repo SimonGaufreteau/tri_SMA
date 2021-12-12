@@ -2,13 +2,14 @@ package com.tri_sma;
 
 import java.util.LinkedList;
 
+import java.util.Observable;
 import java.util.Random;
 
 public class Agent {
     private final double K_PLUS = 0.1;
     private final double K_MINUS = 0.3;
     private final int MEMORY_SIZE = 10;
-    private final boolean ERRORS = true;
+    private final boolean ERRORS = false;
     private final double ERROR_RATE = 0.1;
 
     private static int count = 0;
@@ -53,7 +54,7 @@ public class Agent {
 
         }else if(!isCarrying && tile != '0'){
             f = ERRORS ? (tile=='A' ? (fA+ERROR_RATE*fB)/DOUBLE_MEM : (fB+ERROR_RATE*fA)/DOUBLE_MEM) : (tile == 'A') ? fA/DOUBLE_MEM : fB/DOUBLE_MEM;
-            double prob_get = Math.pow(K_PLUS/(K_PLUS+f/DOUBLE_MEM),2);
+            double prob_get = Math.pow(K_PLUS/(K_PLUS+f),2);
             if(rnd.nextDouble() < prob_get) {
                 isCarrying = true;
                 object = env.getItem(this);
@@ -73,6 +74,7 @@ public class Agent {
 
         move();
         action();
+
     }
 
 

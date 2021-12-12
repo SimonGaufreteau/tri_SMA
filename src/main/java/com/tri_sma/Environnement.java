@@ -2,10 +2,11 @@ package com.tri_sma;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Observable;
 import java.util.Random;
 import java.util.Set;
 
-public class Environnement {
+public class Environnement extends Observable {
     private char[][] grille;
     private Agent[][] grilleAgent;
     private int N,M,nA,nB,nbAgents;
@@ -14,7 +15,35 @@ public class Environnement {
 
     private HashMap<Agent, Point> mapAgents;
 
-    private static char DEFAULT_CHAR = ' ';
+    public static final char DEFAULT_CHAR = ' ';
+
+    public char[][] getGrille() {
+        return grille;
+    }
+
+    public Agent[][] getGrilleAgent() {
+        return grilleAgent;
+    }
+
+    public int getN() {
+        return N;
+    }
+
+    public int getM() {
+        return M;
+    }
+
+    public int getnA() {
+        return nA;
+    }
+
+    public int getnB() {
+        return nB;
+    }
+
+    public int getNbAgents() {
+        return nbAgents;
+    }
 
     public Environnement(int n, int m, int nA, int nB, int nbAgents) {
         N = n;
@@ -35,8 +64,6 @@ public class Environnement {
         remplirValeur(nA,'A');
         remplirValeur(nB,'B');
         placerAgents();
-
-
 
     }
 
@@ -101,6 +128,8 @@ public class Environnement {
             grilleAgent[pos.y][pos.x] = agent;
             mapAgents.put(agent,pos);
         }
+        setChanged();
+        notifyObservers();
     }
 
     @Override
