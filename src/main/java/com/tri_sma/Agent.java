@@ -1,3 +1,4 @@
+package com.tri_sma;
 
 import java.util.LinkedList;
 
@@ -7,7 +8,7 @@ public class Agent {
     private final double K_PLUS = 0.1;
     private final double K_MINUS = 0.3;
     private final int MEMORY_SIZE = 10;
-    private final boolean ERRORS = false;
+    private final boolean ERRORS = true;
     private final double ERROR_RATE = 0.1;
 
     private static int count = 0;
@@ -28,7 +29,7 @@ public class Agent {
         Random rnd = new Random();
         int mvmt = rnd.nextInt(Directions.values().length);
         Directions dir = Directions.values()[mvmt];
-        //System.out.println("Moving Agent "+id+" in "+dir);
+        //System.out.println("Moving com.tri_sma.Agent "+id+" in "+dir);
         env.moveAgent(this,dir);
     }
 
@@ -82,7 +83,7 @@ public class Agent {
 
     @Override
     public String toString() {
-        return "Agent{" +
+        return "com.tri_sma.Agent{" +
                 "id=" + id +
                 '}';
     }

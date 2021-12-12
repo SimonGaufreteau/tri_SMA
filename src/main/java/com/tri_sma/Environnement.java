@@ -1,3 +1,5 @@
+package com.tri_sma;
+
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Random;

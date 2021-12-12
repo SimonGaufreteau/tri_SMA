@@ -1,3 +1,5 @@
+package com.tri_sma;
+
 import java.util.Set;
 
 public class Runner {
