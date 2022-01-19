@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.List;
 
 public class Environnement extends Observable {
+    private Random random;
     private char[][] grille;
     private Agent[][] grilleAgent;
     private double[][] grilleAide;
@@ -54,7 +55,7 @@ public class Environnement extends Observable {
 
     public boolean isVersion2() { return this.VERSION_2; }
 
-    public Environnement(int n, int m, int nA, int nB, int nC, int nbAgents) {
+    public Environnement(int n, int m, int nA, int nB, int nC, int nbAgents, long seed){
         N = n;
         M = m;
         this.nA = nA;
@@ -66,6 +67,7 @@ public class Environnement extends Observable {
         this.grilleAide = new double[n][m];
         mapAgents = new HashMap<>();
         helpers = new ArrayList<>();
+        random = new Random(seed);
 
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
@@ -80,12 +82,28 @@ public class Environnement extends Observable {
             remplirValeur(nC,'C');
         }
         placerAgents();
+    }
 
+    public Environnement(int n, int m, int nA, int nB, int nC, int nbAgents) {
+        this(n,m,nA,nB,nC,nbAgents,new Random().nextInt(100000));
+    }
+
+    public void setRandomSeed(long seed){
+        random.setSeed(seed);
+    }
+
+    public Random generateNewRandom(){
+        random = new Random();
+        return random;
+    }
+
+    public Random getRandom(){
+        return random;
     }
 
     private void placerAgents(){
         int i=0;
-        Random random = new Random();
+
         while(i<nbAgents){
             int x = random.nextInt(M);
             int y = random.nextInt(N);
@@ -101,7 +119,6 @@ public class Environnement extends Observable {
 
     private void remplirValeur(int nb,char ch) {
         int i=0;
-        Random random = new Random();
         while(i<nb){
             int x = random.nextInt(M);
             int y = random.nextInt(N);
@@ -265,7 +282,6 @@ public class Environnement extends Observable {
     }
 
     public Point getPheromonNeighborhood(Point pos) {
-        Random rdn = new Random();
         int x = pos.x;
         int y = pos.y;
         double val = grilleAide[y][x];

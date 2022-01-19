@@ -9,7 +9,7 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Environnement ev = new Environnement(50,50,200,200,200,20);
+        Environnement ev = new Environnement(50,50,200,200,200,20,0);
         Runner runner = new Runner(ev, 360000);
         Stage st = new Stage();
         FourmisApplication fourmiApp = new FourmisApplication(ev);

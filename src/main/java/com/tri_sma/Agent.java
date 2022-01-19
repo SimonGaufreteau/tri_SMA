@@ -43,7 +43,7 @@ public class Agent {
      *      The rate for calling help is 1/(2^n), with n being the number of times he already refreshed values
      */
     public void move()  {
-        Random rnd = new Random();
+        Random rnd = env.getRandom();
         isWaiting=false;
         waitForHelp=0;
         helpCalls=0;
@@ -54,7 +54,7 @@ public class Agent {
     }
 
     public void actionV2() throws Exception {
-        Random rnd = new Random();
+        Random rnd = env.getRandom();
         long fA = memory.stream().filter(character -> character=='A').count();
         long fB = memory.stream().filter(character -> character=='B').count();
         long fC = memory.stream().filter(character -> character=='C').count();
@@ -123,7 +123,7 @@ public class Agent {
     }
 
     public void action() throws Exception {
-        Random rnd = new Random();
+        Random rnd = env.getRandom();
         long fA = memory.stream().filter(character -> character=='A').count();
         long fB = memory.stream().filter(character -> character=='B').count();
 
@@ -153,7 +153,7 @@ public class Agent {
 
     public void run() throws Exception {
         if(this.env.isVersion2()) {
-            Random rnd = new Random();
+            Random rnd = env.getRandom();
             //Si on attend ET que on en a pas marre d'attendre
             double proba_att = 1./Math.pow(waitRate,waitForHelp);
             double prob_rnd = rnd.nextDouble();
