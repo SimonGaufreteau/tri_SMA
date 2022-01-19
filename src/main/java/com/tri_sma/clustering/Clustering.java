@@ -104,28 +104,31 @@ public class Clustering {
     public static void displayClustering(HashSet<HashSet<Point>> clustering, int N,int M,char[][] grid,char default_char){
         ArrayList<HashSet<Point>> clusterList = new ArrayList<>(clustering);
         StringBuilder stringBuilder = new StringBuilder("Clusters :\n");
-        stringBuilder.append('|').append("-".repeat(Math.max(0, N*3))).append("|\n");
+        int nb = (""+clustering.size()).length();
+        stringBuilder.append('|').append("-".repeat(Math.max(0, N*4))).append("|\n");
         for(int i=0;i<N;i++){
             stringBuilder.append("|");
             for(int j=0;j<M;j++){
-                stringBuilder.append(' ');
+                stringBuilder.append(" ");
                 // Check for cluster
                 if(grid[i][j]!=default_char){
                     for(int c = 0; c<clusterList.size();c++){
                         HashSet<Point> cluster = clusterList.get(c);
                         if(cluster.contains(new Point(i,j))){
+                            int l = (""+c).length();
+                            if(l<2) stringBuilder.append('0');
                             stringBuilder.append(c);
                         }
                     }
                 }
                 else{
-                    stringBuilder.append(default_char);
+                    stringBuilder.append((""+default_char).repeat(2));
                 }
                 stringBuilder.append(' ');
             }
             stringBuilder.append("|\n");
         }
-        stringBuilder.append('|').append("-".repeat(Math.max(0, N*3))).append('|');
+        stringBuilder.append('|').append("-".repeat(Math.max(0, N*4))).append('|');
         System.out.println(stringBuilder);
     }
 
@@ -133,7 +136,7 @@ public class Clustering {
 
     public static void main(String[] args) {
         Environnement ev = new Environnement(50,50,200,200,50,20);
-        Runner runner = new Runner(ev,320000);
+        Runner runner = new Runner(ev,1000000);
         try{
             runner.start();
         }catch(Exception e){
@@ -154,7 +157,6 @@ public class Clustering {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Finished clustering.");
-        displayClustering(clustering,ev.getN(),ev.getM(), ev.getGrille(),Environnement.DEFAULT_CHAR);
+
     }
 }
