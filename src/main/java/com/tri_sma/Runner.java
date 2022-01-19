@@ -25,6 +25,7 @@ public class Runner extends Thread {
                     e.printStackTrace();
                 }
             }
+            environnement.evaporate();
         }
         System.out.println("\nEnd of simulation : ");
         System.out.println(environnement);
