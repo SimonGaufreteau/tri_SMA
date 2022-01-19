@@ -143,9 +143,16 @@ public class Environnement extends Observable {
             pos = helpPos;
         }
         if(pos.x >= 0 && pos.y >=0 && pos.y < M && pos.x < N){
-//            System.out.println("Moving agent n°"+ agent.getId()+" to : " + pos.toString());
-            grilleAgent[lastPos.y][lastPos.x] = null;
-            grilleAgent[pos.y][pos.x] = agent;
+            int lastX = lastPos.x;
+            int lastY = lastPos.y;
+            int newX = pos.x;
+            int newY = pos.y;
+            // Si un agent est sur la case, on ne bouge pas
+            if(grilleAgent[newY][newX]!=null){
+                return;
+            }
+            grilleAgent[lastY][lastX] = null;
+            grilleAgent[newY][newX] = agent;
             mapAgents.put(agent,pos);
         }
         setChanged();
@@ -167,7 +174,7 @@ public class Environnement extends Observable {
         stringBuilder.append('|').append("-".repeat(Math.max(0, N*3))).append('|');
 
         // Agents
-        /*stringBuilder.append("\n\nAgents :\n");
+        stringBuilder.append("\n\nAgents :\n");
         stringBuilder.append('|').append("-".repeat(Math.max(0, N*3))).append("|\n");
         for(int i=0;i<N;i++){
             stringBuilder.append("|");
@@ -184,7 +191,7 @@ public class Environnement extends Observable {
             }
             stringBuilder.append("|\n");
         }
-        stringBuilder.append('|').append("-".repeat(Math.max(0, N*3))).append('|');*/
+        stringBuilder.append('|').append("-".repeat(Math.max(0, N*3))).append('|');
         return  stringBuilder.toString();
     }
 
