@@ -132,6 +132,61 @@ public class Clustering {
         System.out.println(stringBuilder);
     }
 
+    public static double basicEvaluation(HashSet<HashSet<Point>> clustering,char[][] grid){
+        double meanSize = 0.;
+        double meanDistance = 0.;
+
+        // Mean size of a cluster
+        for(HashSet<Point> cluster : clustering){
+            int clusterSize = cluster.size();
+            meanSize+=clusterSize;
+        }
+        meanSize /= clustering.size();
+
+        // Calculate centroids
+        HashMap<HashSet<Point>, double[]> centroids = new HashMap<>();
+        for(HashSet<Point> cluster : clustering){
+            double sumX = 0;
+            double sumY = 0;
+            for(Point point : cluster){
+                sumX += point.x;
+                sumY += point.y;
+            }
+            int n = cluster.size();
+            centroids.put(cluster,new double[]{sumX/n,sumY/n});
+        }
+
+        // Mean distance between clusters of the same type
+        int count = 0;
+        HashSet<HashSet<Point>> visited = new HashSet<>();
+
+        for(HashSet<Point> firstCluster : clustering){
+            for(HashSet<Point> secondCluster : clustering){
+                if(!firstCluster.equals(secondCluster) && !visited.contains(secondCluster)){
+                     Point firstPoint = firstCluster.iterator().next();
+                     Point secondPoint = secondCluster.iterator().next();
+                     // Clusters of the same type
+                     if(grid[firstPoint.x][firstPoint.y] == grid[secondPoint.x][secondPoint.y]){
+                         double[] firstCentroid = centroids.get(firstCluster);
+                         double[] secondCentroid = centroids.get(secondCluster);
+                         meanDistance += Math.sqrt(Math.pow(secondCentroid[0] - firstCentroid[0],2)+Math.pow(secondCentroid[1] - firstCentroid[1],2));
+                         count++;
+                         visited.add(secondCluster);
+                     }
+                }
+            }
+            visited.add(firstCluster);
+        }
+        meanDistance /= count;
+
+        System.out.println("Mean size : " + meanSize);
+        System.out.println("Mean distance : "+ meanDistance);
+        double measure = meanSize/meanDistance;
+        System.out.println("Measure : " + measure);
+
+        return measure;
+    }
+
 
 
     public static void main(String[] args) {
@@ -154,6 +209,9 @@ public class Clustering {
         System.out.println("Starting clustering :");
         try {
             clustering = createClustering(ev.getGrille(), 3);
+            System.out.println("Finished clustering.");
+            displayClustering(clustering,ev.getN(),ev.getM(), ev.getGrille(),Environnement.DEFAULT_CHAR);
+            basicEvaluation(clustering, ev.getGrille());
         } catch (Exception e) {
             e.printStackTrace();
         }
