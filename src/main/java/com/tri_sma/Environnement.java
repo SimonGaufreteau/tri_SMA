@@ -11,7 +11,7 @@ public class Environnement extends Observable {
     private double[][] grilleAide;
     private int N,M,nA,nB,nC,nbAgents;
     private final boolean VERSION_2 = true;
-    private final double diffSignal = 2;
+    private double diffSignal = 2;
 
 
     private static int I = 1;
@@ -376,5 +376,15 @@ public class Environnement extends Observable {
             }
         }
         return null;
+    }
+
+    public void setDiffSignal(int diff_signal) {
+        this.diffSignal = diff_signal;
+    }
+
+    public void setAgentWaitRate(double waitRate) {
+        for(Agent agent : mapAgents.keySet()){
+            agent.setWaitRate(waitRate);
+        }
     }
 }

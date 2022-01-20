@@ -210,4 +210,8 @@ public class Agent {
                 "id=" + id +
                 '}';
     }
+
+    public void setWaitRate(double waitRate) {
+        this.waitRate = waitRate;
+    }
 }

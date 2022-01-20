@@ -14,8 +14,8 @@ public class Runner extends Thread {
 
     @Override
     public void run() {
-        System.out.println("Starting the simulation on "+ ITER + " steps");
-        System.out.println(environnement);
+        //System.out.println("Starting the simulation on "+ ITER + " steps");
+        //System.out.println(environnement);
         Set<Agent> agentList = environnement.getAgents();
         for(int i=0;i<ITER;i++){
             for(Agent agent : agentList){
@@ -27,8 +27,8 @@ public class Runner extends Thread {
             }
             environnement.evaporate();
         }
-        System.out.println("\nEnd of simulation : ");
-        System.out.println(environnement);
+        //System.out.println("\nEnd of simulation : ");
+        //System.out.println(environnement);
     }
 
 }
