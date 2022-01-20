@@ -132,7 +132,7 @@ public class Clustering {
         System.out.println(stringBuilder);
     }
 
-    public static double basicEvaluation(HashSet<HashSet<Point>> clustering,char[][] grid){
+    public static double[] basicEvaluation(HashSet<HashSet<Point>> clustering, char[][] grid){
         double meanSize = 0.;
         double meanDistance = 0.;
 
@@ -177,20 +177,25 @@ public class Clustering {
             }
             visited.add(firstCluster);
         }
-        meanDistance /= count;
 
-        System.out.println("Mean size : " + meanSize);
-        System.out.println("Mean distance : "+ meanDistance);
+
+        meanDistance = meanDistance/count;
         double measure = meanSize/meanDistance;
-        System.out.println("Measure : " + measure);
-
-        return measure;
+        return new double[]{meanSize,meanDistance,clustering.size(),measure};
     }
+
+    public static String formatScore(double[] score){
+        if(score.length!=4) return "Invalid score";
+        return "MeanSize = " +score[0] + " / Mean distance = " + score[1] + " / Number of clusters = " + score[2] + " / Score = "+ score[3];
+    }
+
 
 
 
     public static void main(String[] args) {
         Environnement ev = new Environnement(50,50,200,200,50,20);
+        ev.setDiffSignal(7);
+        ev.setAgentWaitRate(1.01);
         Runner runner = new Runner(ev,1000000);
         try{
             runner.start();
@@ -211,7 +216,8 @@ public class Clustering {
             clustering = createClustering(ev.getGrille(), 3);
             System.out.println("Finished clustering.");
             displayClustering(clustering,ev.getN(),ev.getM(), ev.getGrille(),Environnement.DEFAULT_CHAR);
-            basicEvaluation(clustering, ev.getGrille());
+            double[] score = basicEvaluation(clustering, ev.getGrille());
+            System.out.println(formatScore(score));
         } catch (Exception e) {
             e.printStackTrace();
         }
