@@ -49,7 +49,7 @@ public class FourmisApplication extends Application implements Observer {
                         rect.setFill(grid[j][i] != Environnement.DEFAULT_CHAR ? colorHashMap.get(grid[j][i]) : yellowColor(ev.getGrilleAide()[j][i]));
                         Agent agent = ev.getGrilleAgent()[j][i];
                         if(agent!=null) {
-                            rect.setStroke(agent.getAssistantAgent()!=null ? Color.PURPLE : Color.BLACK);
+                            rect.setStroke(agent.getAssistantAgent()!=null ? Color.MAGENTA : Color.BLACK);
                         }else rect.setStroke(Color.WHITE);
 
                         rect.setStrokeWidth(2);
